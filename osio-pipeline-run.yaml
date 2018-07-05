@@ -20,6 +20,17 @@ metadata:
   resourceVersion: "527468"
 objects:
 - apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: osio-nodejs
+  spec:
+    tags:
+      - from:
+          kind: ImageStreamTag
+          name: osio-nodejs:latest
+          namespace: cboudjna-osiotest1
+        name: latest
+- apiVersion: v1
   kind: Service
   metadata:
     name: ${NAME}
@@ -102,3 +113,7 @@ parameters:
   name: AUTOMATIC_DEPLOY
   required: true
   value: "true"
+- description: Target User
+  displayName: Target user to deplo to
+  name: TARGET_USER
+  required: true
