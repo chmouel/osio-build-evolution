@@ -4,8 +4,9 @@ set -x
 
 # Remove $T
 TARGET_USER="${T:cboudjna-osiotest1}"
-REPO="https://github.com/chmouel/nodejs-ex"
-#REPO="https://github.com/bucharest-gold/nodejs-health-check"
+#REPO="https://github.com/chmouel/nodejs-ex"
+#REPO="https://github.com/chmouel/nodejs-health-check"
+REPO="https://github.com/chmouel/node-todo"
 
 reset() {
     for i in ${TARGET_USER} ${TARGET_USER}-run ${TARGET_USER}-stage;do
@@ -21,10 +22,10 @@ reset() {
 reset
 
 oc process -f osio-pipeline-build.yaml TARGET_USER=$TARGET_USER \
-   SOURCE_REPOSITORY_URL=${REPO}|oc create -n ${TARGET_USER} -f-
+   SOURCE_REPOSITORY_URL=${REPO}|oc apply -n ${TARGET_USER} -f-
 
 oc process -f osio-pipeline-run.yaml TARGET_USER=$TARGET_USER \
-   |oc create -n ${TARGET_USER}-stage -f-
+   |oc apply -n ${TARGET_USER}-stage -f-
 
 oc process -f osio-pipeline-run.yaml TARGET_USER=$TARGET_USER \
-   |oc create -n ${TARGET_USER}-run -f-
+   |oc apply -n ${TARGET_USER}-run -f-
