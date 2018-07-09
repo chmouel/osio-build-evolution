@@ -48,14 +48,14 @@ objects:
                   environ = "-stage"
                   // Populating istag to stage project
                   try {
-                    sh "JSON=\$(oc get -o json is/osio-nodejs -n cboudjna-osiotest1${environ});oc delete is/osio-nodejs -n cboudjna-osiotest1${environ} && echo \$JSON|oc create -n cboudjna-osiotest1${environ} -f -;oc get istag -n cboudjna-osiotest1${environ}"
+                    sh "JSON=\$(oc get -o json is/osio-nodejs -n ${TARGET_USER}${environ});oc delete is/osio-nodejs -n ${TARGET_USER}{environ} && echo \$JSON|oc create -n ${TARGET_USER}{environ} -f -;oc get istag -n ${TARGET_USER}{environ}"
                   } catch (err) {
                     error "Error running OpenShift command ${err}"
                   }
-                  openshiftDeploy(deploymentConfig: 'osio-nodejs', namespace: 'cboudjna-osiotest1' + environ)
+                  openshiftDeploy(deploymentConfig: 'osio-nodejs', namespace: '${{TARGET_USER}}' + environ)
 
                   try {
-                    sh "oc get route -n cboudjna-osiotest1${environ} osio-nodejs --template 'http://{{.spec.host}}';echo"
+                    sh "oc get route -n ${TARGET_USER}{environ} osio-nodejs --template 'http://{{.spec.host}}';echo"
                   } catch (err) {
                     error "Error running OpenShift command ${err}"
                   }
@@ -77,14 +77,14 @@ objects:
                   environ = "-run"
                   // Populating istag to stage project
                   try {
-                    sh "JSON=\$(oc get -o json is/osio-nodejs -n cboudjna-osiotest1${environ});oc delete is/osio-nodejs -n cboudjna-osiotest1${environ} && echo \$JSON|oc create -n cboudjna-osiotest1${environ} -f -;oc get istag -n cboudjna-osiotest1${environ}"
+                    sh "JSON=\$(oc get -o json is/osio-nodejs -n ${TARGET_USER}{environ});oc delete is/osio-nodejs -n ${TARGET_USER}{environ} && echo \$JSON|oc create -n ${TARGET_USER}{environ} -f -;oc get istag -n ${TARGET_USER}{environ}"
                   } catch (err) {
                     error "Error running OpenShift command ${err}"
                   }
-                  openshiftDeploy(deploymentConfig: 'osio-nodejs', namespace: 'cboudjna-osiotest1' + environ)
+                  openshiftDeploy(deploymentConfig: 'osio-nodejs', namespace: '${{TARGET_USER}}' + environ)
 
                   try {
-                    sh "oc get route -n cboudjna-osiotest1${environ} osio-nodejs --template 'http://{{.spec.host}}';echo"
+                    sh "oc get route -n ${TARGET_USER}{environ} osio-nodejs --template 'http://{{.spec.host}}';echo"
                   } catch (err) {
                     error "Error running OpenShift command ${err}"
                   }

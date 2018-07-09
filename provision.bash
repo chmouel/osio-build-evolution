@@ -2,8 +2,10 @@
 set -e
 set -x
 
-TARGET_USER="cboudjna-osiotest1"
+# Remove $T
+TARGET_USER="${T:cboudjna-osiotest1}"
 REPO="https://github.com/chmouel/nodejs-ex"
+#REPO="https://github.com/bucharest-gold/nodejs-health-check"
 
 reset() {
     for i in ${TARGET_USER} ${TARGET_USER}-run ${TARGET_USER}-stage;do

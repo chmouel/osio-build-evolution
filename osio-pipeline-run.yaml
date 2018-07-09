@@ -28,7 +28,7 @@ objects:
       - from:
           kind: ImageStreamTag
           name: osio-nodejs:latest
-          namespace: cboudjna-osiotest1
+          namespace: "${{TARGET_USER}}"
         name: latest
 - apiVersion: v1
   kind: Service
