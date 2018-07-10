@@ -10,16 +10,14 @@ REPO="https://github.com/chmouel/node-todo"
 
 reset() {
     for i in ${TARGET_USER} ${TARGET_USER}-run ${TARGET_USER}-stage;do
-        for t in configmap is pvc secrets bc service istag route dc;do
-            oc delete $t --all -n $i
-        done
+#        for t in configmap is pvc secrets bc service istag route dc;do
+#            oc delete $t --all -n $i
+#        done
         oc delete all --all -n $i
     done
-    # Go figure,
-    oc delete bc --all -n ${TARGET_USER}
 }
 
-reset
+#reset
 
 oc process -f osio-pipeline-build.yaml TARGET_USER=$TARGET_USER \
    SOURCE_REPOSITORY_URL=${REPO}|oc apply -n ${TARGET_USER} -f-
