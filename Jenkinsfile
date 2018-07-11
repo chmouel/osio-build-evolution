@@ -1,6 +1,18 @@
 def jobTimeOutHour = 1
 def approvalTimeOutMinutes = 30
 
+def askForInput() {
+  def proceedMessage = """Would you like to promote to the next environment?
+          """
+  try {
+    timeout(time: approvalTimeOutMinutes, unit: 'MINUTES') {
+      input id: 'Proceed', message: "\n${proceedMessage}"
+    }
+  } catch (err) {
+    throw err
+  }
+}
+
 def deploy(_environ) {
   environ = "-"  + _environ
   // Populating istag to stage project
@@ -9,6 +21,7 @@ def deploy(_environ) {
   } catch (err) {
     error "Error running OpenShift command ${err}"
   }
+
   openshiftDeploy(deploymentConfig: '${APPLICATION_NAME}', namespace: '${TARGET_USER}' + environ)
 
   try {
@@ -32,18 +45,7 @@ try {
 
         stage('Deploy to staging') {
           deploy("stage")
-
-          def proceedMessage = """Would you like to promote to the next environment?
-          """
-
-          try {
-            timeout(time: approvalTimeOutMinutes, unit: 'MINUTES') {
-              input id: 'Proceed', message: "\n${proceedMessage}"
-            }
-          } catch (err) {
-            throw err
-          }
-
+          askForInput()
         }
 
         stage('Deploy to production') {
