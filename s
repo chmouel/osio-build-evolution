@@ -33,7 +33,6 @@ oc process -f/tmp/application.yaml SOURCE_REPOSITORY_URL=${REPO} -o json|${FILTE
 for env in stage run;do
     oc process -f/tmp/application.yaml SOURCE_REPOSITORY_URL=${REPO} -o json|${FILTERSCRIPT} dc Route Service|oc apply -f- -n $TARGET_USER-${env}
 
-    read
     #We need something better
     oc delete is --all -n ${TARGET_USER}-${env}
     cat <<EOF|oc apply -f- -n ${TARGET_USER}-${env}
